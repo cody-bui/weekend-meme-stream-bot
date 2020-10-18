@@ -1,0 +1,25 @@
+{
+  "name": "weekend-meme-stream-bot",
+  "version": "1.0.0",
+  "description": "bot",
+  "main": "index.js",
+  "private": true,
+  "dependencies": {
+    "discord.js": "^12.3.1",
+    "screenshot-desktop": "^1.12.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cody-bui/weekend-meme-stream-bot.git"
+  },
+  "author": "cody-bui",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cody-bui/weekend-meme-stream-bot/issues"
+  },
+  "homepage": "https://github.com/cody-bui/weekend-meme-stream-bot#readme"
+}
