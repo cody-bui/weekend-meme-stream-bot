@@ -1,4 +1,9 @@
 {
-	"prefix": "!",
-	"token": "NzY3MTgzNDI0Mjk2NTgzMjM5.X4uNPQ.iFEm5z3grtLiIfjloJ6lYpeO_LY"
+	"commands": "!",
+	"tasks": "--",
+	"token": "NzY3MTgzNDI0Mjk2NTgzMjM5.X4uNPQ.iFEm5z3grtLiIfjloJ6lYpeO_LY",
+	"screenshot": {
+		"format": "png",
+		"path": "E:/media/Pictures/meme stream archives"
+	}
 }
