@@ -14,13 +14,24 @@ function format() {
 module.exports = {
 	name: 'screenshot',
 
-	exec(message, args) {
-		screenshot({ filename: `${config.path}/${format()}.${config.format}` })
-			.then(img => {
+	exec(message, args, special) {
+		screenshot.all().then((imgs) => {
+			console.log(imgs);
+		})
 
-			}).catch(err => {
-				console.log('cannot take screenshots');
-				console.log(err);
-			});
+		screenshot.listDisplays()
+			.then((displays) => {
+
+				for (let index = 0; index < displays.length; index++) {
+					const display = displays[index];
+					const filename = `${config.path}/${format()} display-${index}.${config.format}`;
+
+					screenshot({ screen: display.id, filename: filename }).then((imgpath) => {
+						console.log(imgpath);
+					}).catch(err => {
+						console.error(err);
+					})
+				}
+			})
 	}
-} 
+}

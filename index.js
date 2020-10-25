@@ -45,16 +45,28 @@ client.on('message', async message => {
 		let content = message.content.trim().toLowerCase().slice(commands.length).split(/ +/);
 		let cmd = content[0];
 		let args = content.splice(1);
+		let special = null; // special args for some commands
 
 		// check hashmap for command, execute 'msg' if cannot find
 		let func = cmdlist.find(item => item.name === cmd) ? cmdlist.get(cmd) : cmdlist.get('msg');
-		if (func.name === 'msg') {
-			func.name = cmd;
-			args = cmd;
+
+		// some commands will require special args
+		switch (func.name) {
+			case 'msg':
+				func.name = cmd;
+				special = cmd;
+				break;
+
+			case 'exit':
+			case 'restart':
+				special = client;
+				break;
+
+			default: break;
 		}
 
-		console.log(message.content + ' >> ' + func.name);
-		func.exec(message, args);
+		console.log(message.content + ' >> ' + func.name + ' | ' + args + ' | ' + special);
+		func.exec(message, args, special);
 	}
 
 	// all tasks
@@ -76,8 +88,15 @@ client.on('message', async message => {
 
 
 client.on('disconnect', () => {
-	console.log('bot offline');
+	console.log('bye');
 });
+
+
+// exit bot
+['exit', 'SIGINT'].forEach(event => process.on(event, () => {
+	console.log('bye');
+	client.destroy();
+}))
 
 
 client.login(token);

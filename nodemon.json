@@ -1,7 +1,8 @@
 {
 	"watch": [
 		"index.js",
+		"config.json",
 		"src/"
 	],
-	"ext": "js"
+	"ext": "js, json"
 }
