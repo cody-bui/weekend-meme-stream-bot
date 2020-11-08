@@ -1,4 +1,4 @@
-**bot commands**: `!command`
+**bot commands**: ``command`
 - help - will display this file here
 - ping
 - memestream - start / stop meme stream mode

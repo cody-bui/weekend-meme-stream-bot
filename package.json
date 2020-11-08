@@ -5,8 +5,14 @@
   "main": "index.js",
   "private": true,
   "dependencies": {
+    "@discordjs/opus": "^0.3.3",
+    "discord-ytdl-core": "^4.1.5",
     "discord.js": "^12.3.1",
-    "screenshot-desktop": "^1.12.2"
+    "ffmpeg": "0.0.4",
+    "ffmpeg-static": "^4.2.7",
+    "fluent-ffmpeg": "^2.1.2",
+    "screenshot-desktop": "^1.12.2",
+    "ytdl-core": "^4.0.3"
   },
   "devDependencies": {},
   "scripts": {
@@ -16,10 +22,5 @@
     "type": "git",
     "url": "git+https://github.com/cody-bui/weekend-meme-stream-bot.git"
   },
-  "author": "cody-bui",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/cody-bui/weekend-meme-stream-bot/issues"
-  },
-  "homepage": "https://github.com/cody-bui/weekend-meme-stream-bot#readme"
+  "author": "cody-bui"
 }

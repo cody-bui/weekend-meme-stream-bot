@@ -14,7 +14,7 @@ function format() {
 module.exports = {
 	name: 'screenshot',
 
-	exec(message, args, special) {
+	exec(message, args) {
 		screenshot.all().then((imgs) => {
 			console.log(imgs);
 		})
