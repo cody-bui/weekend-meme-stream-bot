@@ -1,10 +1,10 @@
+/* imports ---------------------------- */
+
 const Discord = require('discord.js');
 const fs = require('fs');
 const { token, commands, tasks } = require('./config.json');
 
 const client = new Discord.Client();
-
-/* imports ---------------------------- */
 
 /**
  * import all modules from a directory
@@ -36,8 +36,8 @@ let cmdlist = importDir(new Discord.Collection(), './src/commands/');
 cmdlist = importDir(cmdlist, './src/music-player/');
 let tasklist = importDir(new Discord.Collection(), './src/tasks/');
 
-// import components
-const player = require('./src/music-player/player');
+const Player = require('./src/music-player/player').Player;
+const player = new Player();
 
 
 /* server events ---------------------- */
@@ -52,17 +52,32 @@ client.on('disconnect', () => {
 });
 
 
+
+// a command that can takeover the parsing of the message, bypassing every filter
+let takeoverMode = false;
+let takeoverCmd = null;
+
+
 client.on('message', async message => {
-	if (message.author.bot) // ignore bot messages (separate with prefix comparison so bot can say 'nice' below)
+	// ignore bot messages
+	if (message.author.bot)
 		return;
 
-	else if (message.content == 'nice') // if the mssage is strictly 'nice', bot will reply 'nice' immediately
+	// if the mssage is strictly 'nice', bot will reply 'nice' immediately
+	else if (message.content === 'nice')
 		message.channel.send('nice');
 
-	else if (message.content.startsWith(commands)) // run command
+	// if still in takeover mode, divert message to that command
+	else if (takeoverMode) {
+		takeoverMode = takeoverCmd.takeover(message);
+		if (!takeoverMode)
+			console.log('takeover mode OFF');
+	}
+
+	else if (message.content.startsWith(commands))
 		command(message);
 
-	else if (message.content.startsWith(tasks)) // run task
+	else if (message.content.startsWith(tasks))
 		task(message);
 
 	else
@@ -70,7 +85,7 @@ client.on('message', async message => {
 });
 
 
-/** functions ------------------------- */
+/* functions -------------------------- */
 
 // execute command
 function command(message) {
@@ -82,25 +97,38 @@ function command(message) {
 	// check hashmap for command, execute 'msg' if cannot find
 	let func = cmdlist.find(item => item.name === cmd) ? cmdlist.get(cmd) : cmdlist.get('msg');
 
-	// some commands will require special args
-	switch (func.name) {
-		case 'msg':
-			special = cmd;
-			break;
+	// if the command has specific takeover function, divert the command to it for as long as it returns true
+	if (func.takeover) {
+		console.log(`takeover mode ON - ${cmd.name}`);
+		takeoverMode = true;
+		takeoverCmd = func;
+		func.takeover(message);
 
-		case 'play':
-		case 'queue':
-		case 'player':
-			special = player;
-			break;
-			
-		default:
-			special = client;
-			break;
 	}
 
-	console.log(`${message.content} -> ${func.name} | ${args} | ${special}`);
-	func.exec(message, args, special);
+	// else, run exec function
+	else {
+
+		// some commands will require special args
+		switch (func.name) {
+			case 'msg':
+				special = cmd;
+				break;
+
+			case 'play':
+			case 'queue':
+			case 'player':
+				special = player;
+				break;
+
+			default:
+				special = client;
+				break;
+		}
+
+		console.log(`${message.content} -> ${func.name} | ${args} | ${special}`);
+		func.exec(message, args, special);
+	}
 }
 
 
@@ -113,7 +141,7 @@ function task(message) {
 	// check hashmap for command, execute 'msg' if cannot find
 	let func = tasklist.get(cmd);
 
-	console.log(message.content + ' >> ' + func.name);
+	console.log(`${message.content} -> ${func.name} | ${args}`);
 	func.exec(message, args);
 }
 
