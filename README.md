@@ -8,16 +8,16 @@ bot testing on channel #bot-test
 
 ### instruction
 #### **config**
-you MUST config the bot before running it
+you **MUST** config the bot before running it
 * a sample `config-sample.json` file is provided
-* most options can be let as default (image type, command prefixes...)
-* you MUST provide your own data for fields encapsulated within `[...]` (access token, folder path...)
+* most options can be let as default: image type, command prefixes...
+* you **MUST** provide your own data for fields with `[...]`: [access token](https://discord.com/developers/applications), folder path...
 * after done, rename that file to `config.json`
 
 #### **run**
 * run `npm i` after cloning
-* if you have nodemon: `nodemon`
-* otherwise,  `npm start`
+* if you're using [nodemon](https://www.npmjs.com/package/nodemon) for development: `nodemon`
+* otherwise, `npm start`
 
 <br>
 

@@ -5,7 +5,7 @@
 
 	"screenshot": {
 		"format": "png",
-		"path": "[path that you want to save the screenshot]"
+		"path": "[path to folder that you want to save the screenshots]"
 	},
 
 	"player": {
