@@ -1,0 +1,13 @@
+{
+	"commands": "`",
+	"tasks": "-",
+	"token": "[your access token]",
+
+	"screenshot": {
+		"format": "png",
+		"path": "[path that you want to save the screenshot]"
+	},
+
+	"player": {
+	}
+}

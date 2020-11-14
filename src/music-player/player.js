@@ -64,8 +64,6 @@ class Player {
 			})
 		});
 
-		console.log(this.queue.length);
-
 		if (this.queue.length === 1) {
 			message.member.voice.channel.join()
 				.then(connection => this.playAudio(connection, message));
@@ -85,7 +83,9 @@ class Player {
 			.setColor('#FE0102')
 			.setTitle(`${this.queue.length} song(s) left in the queue`)
 			.addFields(this.queue.map((item, index) => ({
-				name: `${index}. ${item.info.title}`, value: `length: ${timeConvert(item.info.length_seconds)}`, inline: false
+				name: `${index}. ${item.info.title} ${index === 0 ? '**(playing)**' : ''}`,
+				value: `length: ${timeConvert(item.info.length_seconds)}`,
+				inline: false
 			})))
 
 		message.channel.send(data);
